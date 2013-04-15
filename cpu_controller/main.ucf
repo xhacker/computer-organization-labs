@@ -1,0 +1,16 @@
+NET "RegDst"   LOC="P11";
+NET "ALUsrcB"  LOC="P12";
+NET "MemToReg" LOC="N12";
+NET "WriteReg" LOC="P13";
+NET "MemWrite" LOC="N14";
+NET "Branch"   LOC="L12";
+NET "ALUop1"   LOC="P14";
+NET "ALUop0"   LOC="K12";
+NET "JMP"      LOC="N7";
+
+NET "OP[0]"		LOC="K13";
+NET "OP[1]"		LOC="K14";
+NET "OP[2]"		LOC="J13";
+NET "OP[3]"		LOC="J14";
+NET "OP[4]"		LOC="H13";
+NET "OP[5]"		LOC="H14";
