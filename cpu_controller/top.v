@@ -1,5 +1,5 @@
 module top(
-	input  wire [5:0] OP,
+	input  wire[5:0] OP,
 	output wire RegDst,
 	output wire ALUsrcB,
 	output wire MemToReg,
@@ -12,10 +12,10 @@ module top(
 
 	wire R, LW, SW, BEQ;
 	assign R   = ~OP[0] & ~OP[1] & ~OP[2] & ~OP[3] & ~OP[4] & ~OP[5];
-	assign LW  =  OP[0] & ~OP[1] & ~OP[2] & ~OP[3] &  OP[4] &  OP[5];
-	assign SW  =  OP[0] & ~OP[1] &  OP[2] &  OP[3] &  OP[4] &  OP[5];
-	assign BEQ = ~OP[0] & ~OP[1] & ~OP[2] &  OP[3] & ~OP[4] & ~OP[5];
-	assign JMP = ~OP[0] & ~OP[1] & ~OP[2] & ~OP[3] &  OP[4] & ~OP[5];
+	assign LW  =  OP[0] &  OP[1] & ~OP[2] & ~OP[3] & ~OP[4] &  OP[5];
+	assign SW  =  OP[0] &  OP[1] & ~OP[2] &  OP[3] & ~OP[4] &  OP[5];
+	assign BEQ = ~OP[0] & ~OP[1] &  OP[2] & ~OP[3] & ~OP[4] & ~OP[5];
+	assign JMP = ~OP[0] &  OP[1] & ~OP[2] & ~OP[3] & ~OP[4] & ~OP[5];
 	
 	assign RegDst = R;
 	assign ALUsrcB = LW | SW;

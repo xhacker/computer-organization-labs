@@ -44,10 +44,6 @@ module test;
 		OP = 6'b000100; // BEQ
 		#200
 		OP = 6'b000010; // JMP
-		#200
-		$stop;
-
-		// Add stimulus here
 
 	end
       

@@ -8,9 +8,9 @@ NET "ALUop1"   LOC="P14";
 NET "ALUop0"   LOC="K12";
 NET "JMP"      LOC="N7";
 
-NET "OP[0]"		LOC="K13";
-NET "OP[1]"		LOC="K14";
-NET "OP[2]"		LOC="J13";
-NET "OP[3]"		LOC="J14";
-NET "OP[4]"		LOC="H13";
-NET "OP[5]"		LOC="H14";
+NET "OP[5]"		LOC="K13";
+NET "OP[4]"		LOC="K14";
+NET "OP[3]"		LOC="J13";
+NET "OP[2]"		LOC="J14";
+NET "OP[1]"		LOC="H13";
+NET "OP[0]"		LOC="H14";
