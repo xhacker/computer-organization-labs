@@ -5,7 +5,7 @@ module alu(
 	output reg [31:0] result
 );
 
-always begin
+always @* begin
 	case (control)
 		3'b000 : result <= a1 & a2;
 		3'b001 : result <= a1 | a2;

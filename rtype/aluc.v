@@ -4,7 +4,7 @@ module aluc(
 	output reg [2:0] control
 );
 	
-always begin
+always @* begin
 
 	if (aluop[0] == 0) begin
 		if (aluop[1] == 0) control <= 3'b010;

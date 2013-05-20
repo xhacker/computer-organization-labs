@@ -21,7 +21,7 @@ module test;
 	);
 
 	initial begin
-		clock = 1;
+		clock = 0;
 		instruction = 0;
 
 		instruction = 32'h01A8_8020;
@@ -32,6 +32,17 @@ module test;
 		#100 clock = ~clock;
 		#100 clock = ~clock;
 
+		instruction = 32'h01EA_9024;
+		#100 clock = ~clock;
+		#100 clock = ~clock;
+
+		instruction = 32'h030B_9825;
+		#100 clock = ~clock;
+		#100 clock = ~clock;
+
+		instruction = 32'h032C_A02A;
+		#100 clock = ~clock;
+		#100 clock = ~clock;
 	end
       
 endmodule

@@ -17,7 +17,7 @@ reg_file r0(clock, rs, rt, rd, result, a_data, b_data, 1'b1);
 wire [2:0] alu_op;
 wire [3:0] func;
 assign func = instruction[3:0];
-aluc a0(2'b10, func, alu_op);
+aluc a0(2'b01, func, alu_op);
 alu a1(a_data, b_data, alu_op, result);
 
 endmodule
