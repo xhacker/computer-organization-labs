@@ -2,7 +2,7 @@
 
 module mux(a, b, control, out);
 
-	parameter N = 1;
+	parameter N = 4;
 	input  wire [N-1:0] a, b;
 	input  wire control;
 	output wire [N-1:0] out;
