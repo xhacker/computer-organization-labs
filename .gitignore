@@ -233,3 +233,16 @@ xst/
 isim/
 _ngo/
 _xmsgs/
+
+# IP core generated
+*.asy
+*.sym
+*.veo
+*.vhd
+*.vho
+*.txt
+*.tcl
+*.mif
+templates/
+*.restore
+*_auto_0.ise
