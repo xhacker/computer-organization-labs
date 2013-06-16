@@ -237,7 +237,6 @@ _xmsgs/
 # IP core generated
 *.asy
 *.sym
-*.veo
 *.vhd
 *.vho
 *.txt
