@@ -8,18 +8,19 @@ module debug_out(
 	output reg [7:0] segment
 );
 
-wire [15:0] num;
-case (disp_sel[6:5])
-	2'b00: num = test_out[15:0];
-	2'b01: num = test_out[31:16];
-	2'b10: num = {7'b0000000, pc[8:0]};
-	2'b11: num = clock_count;
-endcase
-
+reg [15:0] num;
 reg [5:0]  code  =  4'b0;
 reg [15:0] count = 15'b0;
 
 always @(posedge clock) begin
+
+	case (disp_sel[6:5])
+		2'b00: num <= test_out[15:0];
+		2'b01: num <= test_out[31:16];
+		2'b10: num <= {7'b0000000, pc[8:0]};
+		2'b11: num <= clock_count;
+	endcase
+
 	case (count[15:14])
 		2'b00: begin
 			anode <= 4'b1110; 

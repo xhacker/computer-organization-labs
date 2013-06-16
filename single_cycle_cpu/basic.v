@@ -7,7 +7,7 @@ module add(a, b, result);
 endmodule
 
 
-module and(a, b, result);
+module and2(a, b, result);
 	input a;
 	input b;
 	output result;
@@ -17,7 +17,7 @@ endmodule
 
 
 module mux(a, b, control, out);
-	parameter N;
+	parameter N = 16;
 	input  wire [N-1:0] a, b;
 	input  wire control;
 	output wire [N-1:0] out;
