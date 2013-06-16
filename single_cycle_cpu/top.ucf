@@ -1,7 +1,5 @@
-// NET "clock" CLOCK_DEDICATED_ROUTE = FALSE;
-// NET "reset" CLOCK_DEDICATED_ROUTE = FALSE;
-
 NET	"clock"			LOC = "L13";
+NET "clock" CLOCK_DEDICATED_ROUTE = FALSE;
 
 NET	"disp_clock_in"	LOC = "T9";
 NET	"reset_in"		LOC = "L14";

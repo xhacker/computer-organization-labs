@@ -52,7 +52,7 @@ input wire [6:0] disp_sel;
 wire [4:0] test_addr;
 assign test_addr[4:0] = disp_sel[6:2];
 wire [31:0] test_out;
-output wire [4:0] led;
+output wire [5:0] led;
 output wire [7:0] disp_seg;
 output wire [3:0] disp_anode;
 
@@ -76,7 +76,7 @@ assign opcode = IR_out[31:26];
 single_pc _single_pc(disp_clock, reset, i_pc, o_pc);
 single_pc_plus4 _single_pc_plus4(o_pc, pc_plus4);
 
-instruction_mem _instruction_mem(o_pc, disp_clock, IR_out);
+instruction_mem _instruction_mem(o_pc, IR_out);
 
 // Select the reg write destination
 mux #(.N(5))_mux_write_reg(IR_out[20:16], IR_out[15:11], RegDst, reg_write_reg);
@@ -95,7 +95,7 @@ sign_extender _sign_extender(IR_out[15:0], signext_out);
 mux #(.N(32))_mux_before_alu(reg_data_2, signext_out, ALUSrc, ALU_in_2);
 alu _alu(reg_data_1, ALU_in_2, ALU_oper[2:0], ALU_zero, ALU_out);
 
-data_mem _data_mem(ALU_out[8:0], disp_clock, reg_data_2, mem_data, MemWrite);
+data_mem _data_mem(ALU_out[8:0], reg_data_2, disp_clock, MemWrite, mem_data);
 
 mux #(.N(32))_mux_after_alu(ALU_out, mem_data, MemtoReg, reg_write_data);
 assign jump_addr = {6'b000000, IR_out[25:0]};
