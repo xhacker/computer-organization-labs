@@ -1,7 +1,7 @@
 ##############################################################
 #
-# Xilinx Core Generator version 14.4
-# Date: Sun Jun 16 09:37:09 2013
+# Xilinx Core Generator version 14.5
+# Date: Mon Jun 17 03:31:10 2013
 #
 ##############################################################
 #
@@ -40,7 +40,7 @@ SELECT Distributed_Memory_Generator xilinx.com:ip:dist_mem_gen:7.2
 # END Select
 # BEGIN Parameters
 CSET ce_overrides=ce_overrides_sync_controls
-CSET coefficient_file=C:\Users\Xhacker\Desktop\computer-organization-labs\single_cycle_cpu\instruction_mem.coe
+CSET coefficient_file=.\instruction_mem.coe
 CSET common_output_ce=false
 CSET common_output_clk=false
 CSET component_name=instruction_mem
@@ -70,4 +70,4 @@ CSET sync_reset_qspo=false
 MISC pkg_timestamp=2012-11-21T20:07:40Z
 # END Extra information
 GENERATE
-# CRC: 5b96f48f
+# CRC: d6d68e40

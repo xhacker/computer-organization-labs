@@ -14,7 +14,7 @@ reg [15:0] count = 15'b0;
 
 always @(posedge clock) begin
 
-	case (disp_sel[6:5])
+	case (disp_sel[1:0])
 		2'b00: num <= test_out[15:0];
 		2'b01: num <= test_out[31:16];
 		2'b10: num <= {7'b0000000, pc[8:0]};

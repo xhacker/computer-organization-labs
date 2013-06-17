@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module top(clock, disp_clock_in, reset_in, disp_sel, led, disp_anode, disp_seg);
+module top(clock, disp_clock_in, reset_in, disp_sel, disp_anode, disp_seg, led);
 
 input wire clock;
 input wire reset_in;
@@ -52,7 +52,7 @@ input wire [6:0] disp_sel;
 wire [4:0] test_addr;
 assign test_addr[4:0] = disp_sel[6:2];
 wire [31:0] test_out;
-output wire [5:0] led;
+output wire [4:0] led;
 output wire [7:0] disp_seg;
 output wire [3:0] disp_anode;
 
@@ -81,7 +81,9 @@ instruction_mem _instruction_mem(o_pc, IR_out);
 // Select the reg write destination
 mux #(.N(5))_mux_write_reg(IR_out[20:16], IR_out[15:11], RegDst, reg_write_reg);
 
-cpu_controller _cpu_controller(opcode, ALUOp, RegDst, RegWrite, Branch, MemtoReg, MemRead, MemWrite, ALUSrc, Jump);
+wire J, R, LW, SW, BEQ;
+cpu_controller _cpu_controller(opcode, ALUOp, RegDst, RegWrite, Branch, MemtoReg, MemRead, MemWrite, ALUSrc, Jump,
+	J, R, LW, SW, BEQ);
 
 gpr _gpr(disp_clock, reset,
 	IR_out[25:21], IR_out[20:16], test_addr,
@@ -108,5 +110,12 @@ mux #(.N(9))_mux_before_pc(branch_out[8:0], jump_addr[8:0], Jump, i_pc);
 
 
 debug_out _debug(disp_clock_count, clock_count, o_pc, test_out, disp_sel, disp_anode, disp_seg);
+
+// Display instruction types
+assign led[0] = J;
+assign led[1] = BEQ;
+assign led[2] = SW;
+assign led[3] = LW;
+assign led[4] = R;
 
 endmodule
