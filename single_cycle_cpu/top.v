@@ -85,7 +85,7 @@ wire J, R, LW, SW, BEQ;
 cpu_controller _cpu_controller(opcode, ALUOp, RegDst, RegWrite, Branch, MemtoReg, MemRead, MemWrite, ALUSrc, Jump,
 	J, R, LW, SW, BEQ);
 
-gpr _gpr(disp_clock, reset,
+gpr _gpr(reset, disp_clock,
 	IR_out[25:21], IR_out[20:16], test_addr,
 	reg_write_reg, reg_write_data, RegWrite,
 	reg_data_1, reg_data_2, test_out);

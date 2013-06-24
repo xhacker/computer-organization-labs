@@ -21,10 +21,12 @@ module gpr(
 	assign o_read_data_3 = mem[i_addr_3];
 
 	always @(posedge clock or posedge reset) begin
-		if (reset)
+		if (reset) begin
 			mem[0] <= 32'h00000000;
-		else if (i_write_enable)
+		end
+		else if (i_write_enable) begin
 			mem[i_write_reg] <= (i_write_reg == 5'b00000) ? 32'h00000000 : i_write_data;
+		end
 	end
 
 endmodule
