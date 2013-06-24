@@ -1,6 +1,6 @@
 module debug_out(
 	input clock,
-	input [15:0] clock_count,
+	input [15:0] disp_clock_count,
 	input [8:0] pc,
 	input [31:0] test_out,
 	input [6:0] disp_sel,
@@ -18,7 +18,7 @@ always @(posedge clock) begin
 		2'b00: num <= test_out[15:0];
 		2'b01: num <= test_out[31:16];
 		2'b10: num <= {7'b0000000, pc[8:0]};
-		2'b11: num <= clock_count;
+		2'b11: num <= disp_clock_count;
 	endcase
 
 	case (count[15:14])

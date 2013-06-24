@@ -76,7 +76,7 @@ assign opcode = IR_out[31:26];
 single_pc _single_pc(disp_clock, reset, i_pc, o_pc);
 single_pc_plus4 _single_pc_plus4(o_pc, pc_plus4);
 
-instruction_mem _instruction_mem(o_pc, IR_out);
+instruction_mem _instruction_mem(o_pc[8:2], IR_out);
 
 // Select the reg write destination
 mux #(.N(5))_mux_write_reg(IR_out[20:16], IR_out[15:11], RegDst, reg_write_reg);
@@ -109,7 +109,7 @@ mux _mux_pc4_branch({{23'b00000000000000000000000}, pc_plus4},
 mux #(.N(9))_mux_before_pc(branch_out[8:0], jump_addr[8:0], Jump, i_pc);
 
 
-debug_out _debug(disp_clock_count, clock_count, o_pc, test_out, disp_sel, disp_anode, disp_seg);
+debug_out _debug(clock, disp_clock_count, o_pc, test_out, disp_sel, disp_anode, disp_seg);
 
 // Display instruction types
 assign led[0] = J;
