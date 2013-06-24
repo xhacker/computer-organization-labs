@@ -9,8 +9,8 @@ wire reset; // anti-jittered
 input wire disp_clock_in;
 wire disp_clock; // anti-jittered
 
-debounce _debounce_disp_clock(clock, disp_clock_in, disp_clock);
-debounce _debounce_reset(clock, reset_in, reset);
+debounce debounce_disp_clock(clock, disp_clock_in, disp_clock);
+debounce debounce_reset(clock, reset_in, reset);
 
 wire [8:0] o_pc;
 wire [8:0] i_pc;
@@ -22,7 +22,7 @@ wire [5:0] opcode;
 wire RegDst;
 wire Jump;
 wire Branch;
-wire MemRead;
+// wire MemRead;
 wire MemtoReg;
 wire [1:0] ALUOp;
 wire MemWrite;
@@ -73,43 +73,43 @@ end
 
 assign opcode = IR_out[31:26];
 
-single_pc _single_pc(disp_clock, reset, i_pc, o_pc);
-single_pc_plus4 _single_pc_plus4(o_pc, pc_plus4);
+single_pc single_pc(disp_clock, reset, i_pc, o_pc);
+single_pc_plus4 single_pc_plus4(o_pc, pc_plus4);
 
-instruction_mem _instruction_mem(o_pc[8:2], IR_out);
+instruction_mem instruction_mem({2'b00, o_pc[8:2]}, IR_out);
 
 // Select the reg write destination
-mux #(.N(5))_mux_write_reg(IR_out[20:16], IR_out[15:11], RegDst, reg_write_reg);
+mux #(.N(5))mux_write_reg(IR_out[20:16], IR_out[15:11], RegDst, reg_write_reg);
 
 wire J, R, LW, SW, BEQ;
-cpu_controller _cpu_controller(opcode, ALUOp, RegDst, RegWrite, Branch, MemtoReg, MemRead, MemWrite, ALUSrc, Jump,
+cpu_controller cpu_controller(opcode, ALUOp, RegDst, RegWrite, Branch, MemtoReg,/* MemRead,*/ MemWrite, ALUSrc, Jump,
 	J, R, LW, SW, BEQ);
 
-gpr _gpr(reset, disp_clock,
+gpr gpr(reset, disp_clock,
 	IR_out[25:21], IR_out[20:16], test_addr,
 	reg_write_reg, reg_write_data, RegWrite,
 	reg_data_1, reg_data_2, test_out);
 
-aluc _aluc(ALUOp, IR_out[3:0], ALU_oper[2:0]);
-sign_extender _sign_extender(IR_out[15:0], signext_out);
+aluc aluc(ALUOp, IR_out[3:0], ALU_oper[2:0]);
+sign_extender sign_extender(IR_out[15:0], signext_out);
 
 
-mux #(.N(32))_mux_before_alu(reg_data_2, signext_out, ALUSrc, ALU_in_2);
-alu _alu(reg_data_1, ALU_in_2, ALU_oper[2:0], ALU_zero, ALU_out);
+mux #(.N(32))mux_before_alu(reg_data_2, signext_out, ALUSrc, ALU_in_2);
+alu alu(reg_data_1, ALU_in_2, ALU_oper[2:0], ALU_zero, ALU_out);
 
-data_mem _data_mem(ALU_out[8:0], reg_data_2, disp_clock, MemWrite, mem_data);
+data_mem data_mem(ALU_out[8:0], reg_data_2, disp_clock, MemWrite, mem_data);
 
-mux #(.N(32))_mux_after_alu(ALU_out, mem_data, MemtoReg, reg_write_data);
+mux #(.N(32))mux_after_alu(ALU_out, mem_data, MemtoReg, reg_write_data);
 assign jump_addr = {6'b000000, IR_out[25:0]};
-and2 _and(ALU_zero, Branch, and_out);
-add _add_branch({{23'b00000000000000000000000}, pc_plus4},
+and2 and2(ALU_zero, Branch, and_out);
+add add_branch({{23'b00000000000000000000000}, pc_plus4},
 	signext_out, branch_addr);
-mux _mux_pc4_branch({{23'b00000000000000000000000}, pc_plus4},
+mux #(.N(32))mux_pc4_branch({{23'b00000000000000000000000}, pc_plus4},
 	branch_addr, and_out, branch_out);
-mux #(.N(9))_mux_before_pc(branch_out[8:0], jump_addr[8:0], Jump, i_pc);
+mux #(.N(9))mux_before_pc(branch_out[8:0], jump_addr[8:0], Jump, i_pc);
 
 
-debug_out _debug(clock, disp_clock_count, o_pc, test_out, disp_sel, disp_anode, disp_seg);
+debug_out debug(clock, disp_clock_count, o_pc, test_out, disp_sel[1:0], disp_anode, disp_seg);
 
 // Display instruction types
 assign led[0] = J;

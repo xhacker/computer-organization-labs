@@ -1,20 +1,20 @@
 module debug_out(
 	input clock,
-	input [15:0] disp_clock_count,
+	input [7:0] disp_clock_count,
 	input [8:0] pc,
 	input [31:0] test_out,
-	input [6:0] disp_sel,
+	input [1:0] disp_control,
 	output reg [3:0] anode,
 	output reg [7:0] segment
 );
 
 reg [15:0] num;
-reg [5:0]  code  =  4'b0;
+reg [3:0]  code  =  4'b0;
 reg [15:0] count = 15'b0;
 
 always @(posedge clock) begin
 
-	case (disp_sel[1:0])
+	case (disp_control)
 		2'b00: num <= test_out[15:0];
 		2'b01: num <= test_out[31:16];
 		2'b10: num <= {7'b0000000, pc[8:0]};
