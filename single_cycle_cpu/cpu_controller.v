@@ -5,7 +5,6 @@ module cpu_controller(
 	output wire RegWrite,
 	output wire Branch,
 	output wire MemtoReg,
-//	output wire MemRead,
 	output wire MemWrite,
 	output wire ALUSrc,
 	output wire Jump,
@@ -24,7 +23,6 @@ module cpu_controller(
 	assign RegWrite = R | LW;
 	assign Branch = BEQ;
 	assign MemtoReg = LW;
-//	assign MemRead = LW;
 	assign MemWrite = SW;
 	assign ALUSrc = LW | SW;
 	assign Jump = JMP;

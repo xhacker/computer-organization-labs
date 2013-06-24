@@ -1,37 +1,23 @@
+`include "includes/alu.vh"
+
 module alu(
-	input wire [31:0] a1,
-	input wire [31:0] a2,
-	input wire [ 2:0] control,
-	output reg zero,
-	output reg [31:0] result
+	input  wire [31:0] a1,
+	input  wire [31:0] a2,
+	input  wire [ 2:0] control,
+	output wire zero,
+	output reg  [31:0] result
 );
+
+assign zero = (result == 0) ? 1 : 0;
 
 always @* begin
 	case (control)
-		3'b000: begin
-			zero = 0;
-			result = a1 & a2;
-		end
-		3'b001: begin
-			zero = 0;
-			result = a1 | a2;
-		end
-		3'b010: begin
-			zero = 0;
-			result = a1 + a2;
-		end
-		3'b110: begin
-			result = a1 - a2;
-			zero = (result == 0);
-		end
-		3'b111: begin
-			zero = 0;
-			result = (a1 < a2) ? 1 : 0;
-		end
-		default: begin
-			zero = 0;
-			result = 0;
-		end
+		`ALU_AND: result = a1 & a2;
+		`ALU_OR:  result = a1 | a2;
+		`ALU_ADD: result = a1 + a2;
+		`ALU_SUB: result = a1 - a2;
+		`ALU_SLT: result = (a1 < a2) ? 1 : 0;
+		default: result = 32'hx;
 	endcase
 end
 
