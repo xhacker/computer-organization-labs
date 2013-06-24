@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module top(clock, disp_clock_in, reset_in, disp_sel, disp_anode, disp_seg, led);
+module top(clock, disp_clock_in, reset_in, disp_sel, disp_anode, disp_seg, led, debug_led);
 
 input wire clock;
 input wire reset_in;
@@ -53,6 +53,7 @@ wire [4:0] test_addr;
 assign test_addr[4:0] = disp_sel[6:2];
 wire [31:0] test_out;
 output wire [4:0] led;
+output wire [7:0] debug_led;
 output wire [7:0] disp_seg;
 output wire [3:0] disp_anode;
 
@@ -117,5 +118,8 @@ assign led[1] = BEQ;
 assign led[2] = SW;
 assign led[3] = LW;
 assign led[4] = R;
+
+// Debug
+assign debug_led[1:0] = ALUOp[1:0];
 
 endmodule
