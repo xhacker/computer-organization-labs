@@ -56,7 +56,7 @@ output [31 : 0] spo;
     .C_ADDR_WIDTH(9),
     .C_DEFAULT_DATA("0"),
     .C_DEPTH(512),
-    .C_FAMILY("spartan3"),
+    .C_FAMILY("spartan6"),
     .C_HAS_CLK(1),
     .C_HAS_D(1),
     .C_HAS_DPO(0),
