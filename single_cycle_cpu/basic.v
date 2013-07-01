@@ -7,7 +7,7 @@ module add(a, b, result);
 endmodule
 
 
-module and2(a, b, result);
+module and_(a, b, result);
 	input a;
 	input b;
 	output result;

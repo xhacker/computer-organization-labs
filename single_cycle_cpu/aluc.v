@@ -5,7 +5,7 @@ module aluc(
 	input wire [3:0] func_code,
 	output reg [2:0] control
 );
-	
+
 always @* begin
 
 	case (aluop)
@@ -20,7 +20,7 @@ always @* begin
 				4'b1010: control <= `ALU_SLT;
 			endcase
 		end
-	end
+	endcase
 
 end
 

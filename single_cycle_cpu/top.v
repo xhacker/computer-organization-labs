@@ -102,7 +102,7 @@ data_mem data_mem(ALU_out[8:0], reg_data_2, disp_clock, MemWrite, mem_data);
 
 mux #(.N(32))mux_after_alu(ALU_out, mem_data, MemtoReg, reg_write_data);
 assign jump_addr = {6'b000000, IR_out[25:0]};
-and2 and2(ALU_zero, Branch, and_out);
+and_ and_(ALU_zero, Branch, and_out);
 add add_branch({{23'b00000000000000000000000}, pc_plus4},
 	signext_out, branch_addr);
 mux #(.N(32))mux_pc4_branch({{23'b00000000000000000000000}, pc_plus4},
@@ -120,6 +120,6 @@ assign led[3] = LW;
 assign led[4] = R;
 
 // Debug
-assign debug_led[1:0] = ALUOp[1:0];
+assign debug_led[7:0] = {6'b000000, ALUOp[1:0]};
 
 endmodule
