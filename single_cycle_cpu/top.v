@@ -22,7 +22,6 @@ wire [5:0] opcode;
 wire RegDst;
 wire Jump;
 wire Branch;
-// wire MemRead;
 wire MemtoReg;
 wire [1:0] ALUOp;
 wire MemWrite;
@@ -83,7 +82,7 @@ instruction_mem instruction_mem(.a({2'b00, o_pc[8:2]}), .spo(IR_out));
 mux #(.N(5))mux_write_reg(IR_out[20:16], IR_out[15:11], RegDst, reg_write_reg);
 
 wire J, R, LW, SW, BEQ;
-cpu_controller cpu_controller(opcode, ALUOp, RegDst, RegWrite, Branch, MemtoReg,/* MemRead,*/ MemWrite, ALUSrc, Jump,
+cpu_controller cpu_controller(opcode, ALUOp, RegDst, RegWrite, Branch, MemtoReg, MemWrite, ALUSrc, Jump,
 	J, R, LW, SW, BEQ);
 
 gpr gpr(reset, hand_clock,
@@ -103,8 +102,7 @@ data_mem data_mem(.a(ALU_out[8:0]), .d(reg_data_2), .clk(hand_clock), .we(MemWri
 mux #(.N(32))mux_after_alu(ALU_out, mem_data, MemtoReg, reg_write_data);
 assign jump_addr = {4'b0000, IR_out[25:0], 2'b00};
 and_ and_(ALU_zero, Branch, and_out);
-add add_branch({{23'b00000000000000000000000}, pc_plus4},
-	signext_out, branch_addr);
+add add_branch(o_pc, signext_out << 2, branch_addr);
 mux #(.N(32))mux_pc4_branch({{23'b00000000000000000000000}, pc_plus4},
 	branch_addr, and_out, branch_out);
 mux #(.N(9))mux_before_pc(branch_out[8:0], jump_addr[8:0], Jump, i_pc);
