@@ -21,11 +21,6 @@ NET "led[4]"		LOC = "P13";
 NET "debug_led[0]"	LOC = "B1";
 NET "debug_led[1]"	LOC = "C1";
 NET "debug_led[2]"	LOC = "C2";
-NET "debug_led[3]"	LOC = "R5";
-NET "debug_led[4]"	LOC = "T5";
-NET "debug_led[5]"	LOC = "R6";
-NET "debug_led[6]"	LOC = "T8";
-NET "debug_led[7]"	LOC = "N7";
 
 NET "disp_anode[0]"	LOC = "D14";
 NET "disp_anode[1]"	LOC = "G14";
