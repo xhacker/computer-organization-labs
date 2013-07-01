@@ -101,7 +101,7 @@ alu alu(reg_data_1, ALU_in_2, ALU_oper[2:0], ALU_zero, ALU_out);
 data_mem data_mem(.a(ALU_out[8:0]), .d(reg_data_2), .clk(hand_clock), .we(MemWrite), .spo(mem_data));
 
 mux #(.N(32))mux_after_alu(ALU_out, mem_data, MemtoReg, reg_write_data);
-assign jump_addr = {6'b000000, IR_out[25:0]};
+assign jump_addr = {4'b0000, IR_out[25:0], 2'b00};
 and_ and_(ALU_zero, Branch, and_out);
 add add_branch({{23'b00000000000000000000000}, pc_plus4},
 	signext_out, branch_addr);
