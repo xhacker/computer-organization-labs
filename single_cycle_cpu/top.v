@@ -2,11 +2,11 @@
 
 module top(clock, hand_clock_in, reset_in, disp_sel, disp_anode, disp_seg, led, debug_led);
 
-input wire clock;
+input wire clock; // the actual clock, for display
 input wire reset_in;
 wire reset; // anti-jittered
 
-input wire hand_clock_in;
+input wire hand_clock_in; // clock for CPU
 wire hand_clock; // anti-jittered
 
 debounce debounce_hand_clock(clock, hand_clock_in, hand_clock);
@@ -43,7 +43,6 @@ wire and_out;
 wire [31:0] branch_addr;
 wire [31:0] branch_out;
 
-reg [15:0] clock_count;
 reg [7:0] hand_clock_count;
 
 // Display related
@@ -56,13 +55,6 @@ output wire [2:0] debug_led;
 output wire [7:0] disp_seg;
 output wire [3:0] disp_anode;
 
-
-always @(posedge clock or posedge reset) begin
-	if (reset == 1)
-		clock_count = 16'h0000;
-	else
-		clock_count = clock_count + 1'b1;
-end
 
 always @(posedge hand_clock or posedge reset) begin
 	if (reset == 1)
@@ -100,11 +92,15 @@ alu alu(reg_data_1, ALU_in_2, ALU_oper[2:0], ALU_zero, ALU_out);
 data_mem data_mem(.a(ALU_out[8:0]), .d(reg_data_2), .clk(hand_clock), .we(MemWrite), .spo(mem_data));
 
 mux #(.N(32))mux_after_alu(ALU_out, mem_data, MemtoReg, reg_write_data);
+// for j, jump_addr = addr << 2
 assign jump_addr = {4'b0000, IR_out[25:0], 2'b00};
+// for beq, if a == b, branch
 and_ and_(ALU_zero, Branch, and_out);
 add add_branch(o_pc, signext_out << 2, branch_addr);
+// pc + 4 or branch
 mux #(.N(32))mux_pc4_branch({{23'b00000000000000000000000}, pc_plus4},
 	branch_addr, and_out, branch_out);
+// branch or jump
 mux #(.N(9))mux_before_pc(branch_out[8:0], jump_addr[8:0], Jump, i_pc);
 
 
